@@ -23,6 +23,7 @@ build() {
   cd "${srcdir}/${_realname}-${pkgver}"
   ./configure \
     --prefix=${MINGW_PREFIX}
+  make
 }
 
 check() {
@@ -35,4 +36,4 @@ package() {
   make DESTDIR="$pkgdir" install
 }
 
-# vim: ft=sh set ts=2 sw=2 et :
+# vim: set ft=sh ts=2 sw=2 et :
