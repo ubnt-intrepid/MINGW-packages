@@ -1,0 +1,11 @@
+--- a/src/qtterminal/qt_conversion.cpp	2016-03-22 04:48:11.607016400 +0900
++++ b/src/qtterminal/qt_conversion.cpp	2016-03-22 04:48:18.449860800 +0900
+@@ -126,7 +126,7 @@ QImage qt_imageToQImage(int M, int N, co
+ 			QRgb* line = (QRgb*)(qimage.scanLine(n));
+ 			for (int m = 0; m < M; m++)
+ 			{
+-				if (isnan(*image))
++				if (std::isnan(*image))
+ 				{
+ 					image++;
+ 					*line++ = 0x00000000;

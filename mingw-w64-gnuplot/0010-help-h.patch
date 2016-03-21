@@ -1,0 +1,17 @@
+--- a/src/command.c	2016-03-22 04:43:06.078461100 +0900
++++ b/src/command.c	2016-03-22 04:43:12.981369000 +0900
+@@ -117,13 +117,7 @@ int thread_rl_RetCode = -1; /* return co
+ #endif /* OS2_IPC */
+ 
+ 
+-#ifndef _Windows
+-# include "help.h"
+-#else
+-# ifdef USE_OWN_WINSYSTEM_FUNCTION
+-static int winsystem __PROTO((const char *));
+-# endif
+-#endif /* _Windows */
++#include "help.h"
+ 
+ #ifdef _Windows
+ # include <windows.h>

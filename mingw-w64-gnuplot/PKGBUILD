@@ -1,0 +1,46 @@
+# Maintainer: Yusuke Sasaki <yusuke dot sasaki dot oss at gmail dot com>
+
+_realname=gnuplot
+pkgbase="mingw-w64-${_realname}"
+pkgname="${MINGW_PACKAGE_PREFIX}-${_realname}"
+pkgver=5.0.3
+pkgrel=1
+arch=('any')
+url='http://botan.randombit.net/'
+pkgdesc='Complex error functions, Dawson, Faddeeva, and Voigt function (mingw-w64)'
+depends=()
+makedepends=()
+license=('MIT')
+source=("http://downloads.sourceforge.net/sourceforge/gnuplot/gnuplot-${pkgver}.tar.gz"
+        0010-help-h.patch
+        0020-isnan.patch)
+sha256sums=(SKIP
+            SKIP
+            SKIP)
+
+prepare() {
+  cd "${srcdir}/${_realname}-${pkgver}"
+  patch -Np1 -i "${srcdir}/0010-help-h.patch"
+  patch -Np1 -i "${srcdir}/0020-isnan.patch"
+}
+
+build() {
+  cd "${srcdir}/${_realname}-${pkgver}"
+  CFLAGS="-DWGP_CONSOLE" \
+    ./configure \
+      --prefix=${MINGW_PREFIX} \
+      --without-latex
+  make
+}
+
+check() {
+  cd "${srcdir}/${_realname}-${pkgver}"
+  make check
+}
+
+package() {
+  cd "${srcdir}/${_realname}-${pkgver}"
+  make DESTDIR="$pkgdir" install
+}
+
+# vim: set ft=sh ts=2 sw=2 et :
