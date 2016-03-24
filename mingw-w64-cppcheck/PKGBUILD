@@ -27,23 +27,27 @@ prepare() {
 build() {
   cd "${srcdir}/${_realname}-${pkgver}"
 
-  LANG='en_US.UTF-8' make \
-    SRCDIR=build \
-    CFGDIR=${MINGW_PREFIX}/share/cppcheck/cfg \
-    HAVE_RULES=yes \
-    LDFLAGS=-lshlwapi RDYNAMIC=
+  MSYS2_ARG_CONV_EXCL="CFGDIR=" \
+  LANG='en_US.UTF-8' \
+    make \
+      SRCDIR=build \
+      CFGDIR=${MINGW_PREFIX}/share/cppcheck/cfg \
+      HAVE_RULES=yes \
+      LDFLAGS=-lshlwapi RDYNAMIC=
 
-  make man \
-    DB2MAN=${MINGW_PREFIX}/share/xml/docbook/xsl-stylesheets-1.78.1/manpages/docbook.xsl \
-    CFGDIR=${MINGW_PREFIX}/share/cppcheck/cfg
+  MSYS2_ARG_CONV_EXCL="CFGDIR=" \
+    make man \
+      DB2MAN=${MINGW_PREFIX}/share/xml/docbook/xsl-stylesheets-1.78.1/manpages/docbook.xsl \
+      CFGDIR=${MINGW_PREFIX}/share/cppcheck/cfg
 
   cd gui
   lrelease gui.pro
   qmake HAVE_RULES=yes
-  make \
-    SRCDIR=build \
-    CFGDIR=${MINGW_PREFIX}/share/cppcheck/cfg \
-    HAVE_RULES=yes
+  MSYS2_ARG_CONV_EXCL="CFGDIR=" \
+    make \
+      SRCDIR=build \
+      CFGDIR=${MINGW_PREFIX}/share/cppcheck/cfg \
+      HAVE_RULES=yes
 }
 
 check() {
@@ -59,12 +63,14 @@ check() {
 package() {
   cd "${srcdir}/${_realname}-${pkgver}"
 
-  LANG='en_US.UTF-8' make install \
-    DESTDIR="${pkgdir}" \
-    PREFIX="${MINGW_PREFIX}" \
-    SRCDIR=build \
-    CFGDIR=${MINGW_PREFIX}/share/cppcheck/cfg \
-    HAVE_RULES=yes
+  MSYS2_ARG_CONV_EXCL="CFGDIR=" \
+  LANG='en_US.UTF-8' \
+    make install \
+      DESTDIR="${pkgdir}" \
+      PREFIX="${MINGW_PREFIX}" \
+      SRCDIR=build \
+      CFGDIR=${MINGW_PREFIX}/share/cppcheck/cfg \
+      HAVE_RULES=yes
 
   # man and COPYING
   install -Dpm644 cppcheck.1 "${pkgdir}${MINGW_PREFIX}/share/man/man1/cppcheck.1"
