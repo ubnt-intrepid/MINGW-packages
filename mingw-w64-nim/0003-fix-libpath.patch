@@ -1,0 +1,16 @@
+diff --git a/compiler/options.nim b/compiler/options.nim
+index 7cf7079..c3e7482 100644
+--- a/compiler/options.nim
++++ b/compiler/options.nim
+@@ -214,7 +214,10 @@ proc setDefaultLibpath*() =
+       if prefix == "/usr": libpath = "/usr/lib/nim"
+       elif prefix == "/usr/local": libpath = "/usr/local/lib/nim"
+       else: libpath = joinPath(prefix, "lib")
+-    else: libpath = joinPath(prefix, "lib")
++    else:
++      if prefix.endsWith("mingw32"): libpath = joinPath(prefix, "/lib\\nim")
++      elif prefix.endsWith("mingw64"): libpath = joinPath(prefix, "lib\\nim")
++      else: libpath = joinPath(prefix, "lib")
+ 
+     # Special rule to support other tools (nimble) which import the compiler
+     # modules and make use of them.
